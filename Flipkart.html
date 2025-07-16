@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Flipkart Clone</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f3f6;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: whitesmoke;
+      color: white;
+      padding: 10px 20px;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-logo {
+      width: 120px;
+      margin-right: 20px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      padding: 5px 10px;
+      border-radius: 2px;
+      width: 400px;
+    }
+
+    .search-box i {
+      color: #888;
+      margin-right: 8px;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      width: 100%;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-item {
+      position: relative;
+      padding: 0 15px;
+      cursor: pointer;
+      color: black;
+    }
+
+    .nav-item i {
+      margin-right: 5px;
+    }
+
+    .nav-item span {
+      vertical-align: middle;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      background-color: white;
+      color: blue;
+      top: 100%;
+      right: 0;
+      min-width: 200px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 4px;
+      z-index: 100;
+    }
+
+    .nav-item:hover .dropdown {
+      display: block;
+    }
+
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .dropdown a:hover {
+      background-color: black;
+    }
+
+    .dropdown a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .signup-link {
+      font-weight: bold;
+      color: #2874f0;
+    }
+
+    /* Category menu */
+    .category-menu {
+      display: flex;
+      justify-content: space-around;
+      background: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      overflow-x: auto;
+    }
+
+    .category {
+      text-align: center;
+      font-size: 13px;
+      color: #333;
+      flex: 0 0 auto;
+      width: 100px;
+    }
+
+    .category img {
+      width: 70px;
+      height: 70px;
+      margin-bottom: 8px;
+    }
+
+    /* Banners & grid */
+    .image-banner img,
+    .grid-images img {
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .grid-banner,
+    .featured-brands {
+      background: #fff;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-banner h2,
+    .featured-brands h2 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 26px;
+      text-align: center;
+    }
+
+    .grid-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .grid-images img {
+      width: calc(33.33% - 20px);
+      height: 180px;
+    }
+
+    /* Sections */
+    .section {
+      padding: 20px;
+      background: #fff;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .products {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .product-card {
+      background: #f9f9f9;
+      padding: 10px;
+      width: 180px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border-radius: 6px;
+    }
+
+    .product-card.smartphone img,
+    .product-card.furniture img {
+      height: 200px;
+    }
+
+    .product-title {
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+<div class="navbar">
+  <div class="navbar-left">
+    <img class="navbar-logo" src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/fkheaderlogo_exploreplus-44005d.svg" alt="Flipkart Logo">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search for Products, Brands and More">
+    </div>
+  </div>
+
+  <div class="navbar-right">
+    <div class="nav-item">
+      <i class="fas fa-user-circle"></i><span>Login</span>
+      <div class="dropdown">
+        <a href="#"><i class="fas fa-user"></i> My Profile</a>
+        <a href="#"><i class="fas fa-star"></i> Flipkart Plus Zone</a>
+        <a href="#"><i class="fas fa-box"></i> Orders</a>
+        <a href="#"><i class="fas fa-heart"></i> Wishlist</a>
+        <a href="#"><i class="fas fa-gift"></i> Rewards</a>
+        <a href="#"><i class="fas fa-credit-card"></i> Gift Cards</a>
+        <a href="#" class="signup-link"><i class="fas fa-user-plus"></i> Sign Up</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <i class="fas fa-shopping-cart"></i><span>Cart</span>
+    </div>
+
+    <div class="nav-item">
+      <i class="fas fa-store"></i><span>Become a Seller</span>
+    </div>
+
+    <!-- Three Dots More Menu -->
+    <div class="nav-item more-options">
+      <i class="fas fa-ellipsis-v"></i>
+      <div class="dropdown">
+        <a href="#"><i class="fas fa-bell"></i> Notification Preferences</a>
+        <a href="#"><i class="fas fa-headset"></i> 24x7 Customer Care</a>
+        <a href="#"><i class="fas fa-bullhorn"></i> Advertise</a>
+        <a href="#"><i class="fas fa-mobile-alt"></i> Download App</a>
+      </div>
+    </div>
+  </div>
+</div
+  <!-- Category Menu -->
+  <div class="category-menu">
+    <div class="category"><img src="https://rukminim1.flixcart.com/fk-p-flap/64/64/image/a22a213ca6221b65.png?q=100"
+        alt="Minutes"><span>Minutes</span></div>
+    <div class="category"><img src="https://rukminim1.flixcart.com/fk-p-flap/64/64/image/5f2ee7f883cdb774.png?q=100"
+        alt="Mobiles"><span>Mobiles & Tablets</span></div>
+    <div class="category"><img src="https://rukminim1.flixcart.com/fk-p-flap/64/64/image/ff559cb9d803d424.png?q=100"
+        alt="Fashion"><span>Fashion</span></div>
+    <div class="category"><img src="https://rukminim1.flixcart.com/fk-p-flap/64/64/image/af646c36d74c4be9.png?q=100"
+        alt="Electronics"><span>Electronics</span></div>
+    <div class="category"><img src="https://rukminim1.flixcart.com/fk-p-flap/64/64/image/1788f177649e6991.png?q=100"
+        alt="Home"><span>Home & Furniture</span></div>
+    <div class="category"><img src="https://rukminim1.flixcart.com/fk-p-flap/64/64/image/e90944802d996756.jpg?q=100"
+        alt="TVs"><span>TVs & Appliances</span></div>
+    <div class="category"><img src="https://rukminim1.flixcart.com/fk-p-flap/64/64/image/3c647c2e0d937dc5.png?q=100"
+        alt="Flight"><span>Flight Bookings</span></div>
+    <div class="category"><img src="https://rukminim1.flixcart.com/fk-p-flap/64/64/image/aeeada80b1863116.png?q=100"
+        alt="Grocery"><span>Grocery</span></div>
+  </div>
+
+  <!-- Banner -->
+  <div class="image-banner">
+    <img src="https://rukminim1.flixcart.com/fk-p-flap/1620/270/image/1482d20068a6469d.jpg?q=80" alt="Promo Banner"
+      style="width:100%;">
+  </div>
+
+  <!-- Smartphones Section -->
+  <div class="section">
+    <h2>Best Deals on smartphones</h2>
+    <div class="products">
+      <div class="product-card smartphone"><img
+          src="https://rukminim1.flixcart.com/image/120/120/xif0q/mobile/k/t/x/-original-imahbgpzbumfzkbh.jpeg?q=80">
+        <div class="product-title">Vivo T4-5G</div>
+      </div>
+      <div class="product-card smartphone"><img
+          src="https://rukminim1.flixcart.com/image/120/120/xif0q/mobile/n/l/u/-original-imah2fjd7wfd9ksh.jpeg?q=80">
+        <div class="product-title">Motorola G85 5G</div>
+      </div>
+      <div class="product-card smartphone"><img
+          src="https://rukminim1.flixcart.com/image/120/120/xif0q/mobile/f/k/e/-original-imahbfd4zqn9zazz.jpeg?q=80">
+        <div class="product-title">Oppo k13 5G</div>
+      </div>
+      <div class="product-card smartphone"><img
+          src="https://rukminim1.flixcart.com/image/120/120/xif0q/mobile/t/c/y/-original-imahaff2rbuykhcw.jpeg?q=80">
+        <div class="product-title">Realme P3 5G</div>
+      </div>
+      <div class="product-card smartphone"><img
+          src="https://rukminim1.flixcart.com/image/120/120/xif0q/mobile/r/l/c/-original-imah3xk892aj9gck.jpeg?q=80">
+        <div class="product-title">Motorola g45 5G</div>
+      </div>
+      <div class="product-card smartphone"><img
+          src="https://rukminim1.flixcart.com/image/120/120/xif0q/mobile/y/i/6/-original-imahdpu7wqfgfryp.jpeg?q=80">
+        <div class="product-title">POCO F7 5G</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Furniture Section -->
+  <div class="section">
+    <h2>Furniture Top Deals</h2>
+    <div class="products">
+      <div class="product-card furniture"><img
+          src="https://rukminim1.flixcart.com/image/120/120/xif0q/bottle/l/l/a/2000-leakproof-unbreabale-bpa-free-travel-gym-big-water-bottle-original-imagvy3zeybfrnse.jpeg?q=80">
+        <div class="product-title">Water Bottles From ₹199</div>
+      </div>
+      <div class="product-card furniture"><img
+          src="data:image/jpeg;base64,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">
+        <div class="product-title">Gas Stoves
+          From ₹999</div>
+      </div>
+      <div class="product-card furniture"><img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzs4x-h9afzdmujFFeSEdz80Ij9sZjv4S-iA&s">
+        <div class="product-title">Cookware Sets From ₹499</div>
+      </div>
+      <div class="product-card furniture"><img
+          src="https://rukminim1.flixcart.com/image/120/120/kg9qbgw0/mosquito-net/8/e/h/polyester-adults-pop-up-foldable-double-bed-king-size-mosquito-original-imafwjf9gwdzfw8n.jpeg?q=80">
+        <div class="product-title">Mosquito Nets 
+          From ₹249</div>
+      </div>
+      <div class="product-card furniture"><img
+          src="data:image/jpeg;base64,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">
+        <div class="product-title">Faucets Up to 
+          80% Off</div>
+      </div>
+      <div class="product-card furniture"><img
+          src="https://rukminim2.flixcart.com/image/612/612/xif0q/hanger/o/0/v/12-multipurpose-steel-hangers-for-wardrobe-lashkara-original-imahyaghzaqnwhgb.jpeg?q=70">
+        <div class="product-title">Home Utilities 
+          From ₹89</div>
+      </div>
+      <div class="product-card furniture"><img
+          src="https://rukminim1.flixcart.com/image/120/120/kfyasnk0/wardrobe-closet/v/d/f/particle-board-w4wen00ld2wmp-flipkart-perfect-homes-melamine-original-imafwagtzkyzdj8b.jpeg?q=80">
+        <div class="product-title">Wardrobe
+           From ₹5,490</div>
+      </div>
+      <div class="product-card furniture"><img
+          src="https://rukminim1.flixcart.com/image/120/120/xif0q/dinner-set/0/l/l/no-40-emerald-bloom-melamine-dinner-set-dishwasher-safe-stain-original-imagweh894qnhjgx.jpeg?q=80">
+        <div class="product-title">Dinner Sets 
+          From ₹499</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banner -->
+  <div class="image-banner">
+    <img src="https://rukminim1.flixcart.com/fk-p-flap/1600/350/image/832d14777516a457.jpg?q=80" alt="Promo Banner">
+  </div>
+
+  <!-- Grid Banner Section -->
+  <div class="grid-banner">
+    <h2>Featured Offers</h2>
+    <div class="grid-images">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/520/280/image/f4523a4d451644a0.jpg?q=80">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/520/280/image/e549a027e172b730.jpg?q=80">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/520/280/image/6fd208e38f7e5c86.jpg?q=80">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/520/280/image/5e5677f3aba1bd8c.png?q=80">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/520/280/image/35f61c4271dcd718.jpg?q=80">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/520/280/image/25fc7992288d87ea.jpg?q=80">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/520/280/image/2a4e25aa83d14ac1.jpg?q=80">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/520/280/image/dd6cc41c418b9c15.jpg?q=80">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/520/280/image/ee753b8c57dcf2a5.jpg?q=80">
+    </div>
+  </div>
+
+  <!-- Featured Brands Section -->
+  <div class="featured-brands">
+    <h2>Featured Brands</h2>
+    <div class="brand-logos">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/450/280/image/0bebb932222b5c44.jpeg?q=80" alt="">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/450/280/image/07a70e4f874785f4.jpeg?q=80" alt="">
+      <img src="https://rukminim1.flixcart.com/fk-p-flap/450/280/image/9957a64f08822059.jpeg?q=80" alt="">
+
+    </div>
+
+    <!-- Fashion Section -->
+    <div class="fashion-section">
+      <h2>Fashion's Top Deals</h2>
+      <div class="fashion-products products">
+        <div class="product-card fashion"><img
+            src="https://rukminim1.flixcart.com/image/120/120/xif0q/sofa-bed/3/q/4/-original-imagm9ckhma9u8a3.jpeg?q=80">
+          <div class="product-title">Sofa Bed 
+            from ₹4299</div>
+        </div>
+        <div class="product-card fashion"><img
+            src="https://rukminim1.flixcart.com/image/120/120/kg6vfrk0/portable-laptop-table/b/t/a/plywood-multifunction-easy-portable-and-foldable-study-table-for-original-imafwhhug8zzbgaw.jpeg?q=80">
+          <div class="product-title">Portable laptop table 
+            from ₹399</div>
+        </div>
+        <div class="product-card fashion"><img
+            src="https://rukminim1.flixcart.com/image/120/120/xif0q/office-study-chair/v/m/w/1-mango-wood-66-kiev-hb-brown-410-green-soul-124-original-imah9pzx4tcjrbjs.jpeg?q=80">
+          <div class="product-title">Office Chairs 
+            From ₹2,490</div>
+        </div>
+        <div class="product-card fashion"><img
+            src="https://rukminim1.flixcart.com/image/120/120/xif0q/bed-mattress/y/y/m/normal-top-queen-5-60-75-orthopedic-hard-soft-dual-comfort-flip-original-imagxvyfhnbucysz.jpeg?q=80">
+          <div class="product-title">Furniture deals
+            From 1999</div>
+        </div>
+        <div class="product-card fashion"><img
+            src="https://rukminim1.flixcart.com/image/120/120/xif0q/bean-bag/r/k/w/4xl-cushionbeanbag-01-giglick-original-imagrabwzv9yznqg.jpeg?q=80">
+          <div class="product-title">Bean Bag 
+            from ₹999</div>
+        </div>
+        <div class="product-card fashion"><img
+            src="https://rukminim1.flixcart.com/image/120/120/l3929ow0/tv-entertainment-unit/m/3/w/25-00-130-00-particle-board-18-ak-laura-wnt-wt-anikaa-112-00-43-original-imageet2xjgufrjz.jpeg?q=80">
+          <div class="product-title">TV Units 
+            from 1999</div>
+        </div>
+        <div class="product-card fashion"><img
+            src="https://rukminim1.flixcart.com/image/120/120/xif0q/bed-mattress/c/m/f/-original-imags7p6hvqgberz.jpeg?q=80">
+          <div class="product-title">Mattress
+             From ₹2,999</div>
+        </div>
+      </div>
+    </div>
+
+</body>
+
+</html>
